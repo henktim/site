@@ -1,0 +1,19 @@
+#!/bin/bash
+ids=`perl getID.pl`
+rm /tmp/ids
+for id in $ids;
+ do
+  echo "esxcli vm process kill --type=soft --world-id $id  2>/dev/null" >> /tmp/ids ;
+ done
+
+echo "poweroff" >> /tmp/ids
+
+ips=("192.168.178.214 192.168.178.206 192.168.178.164")
+for ip in $ips
+ do
+ scp /tmp/ids root@$ip:/tmp
+ echo "scp /tmp/ids root@$ip:/tmp"
+ 
+ ssh root@$ip "source /tmp/ids"
+ done
+

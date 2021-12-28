@@ -1,0 +1,6 @@
+info=`ssh root@192.168.178.206  esxcli vm process list`
+world=`echo $info |awk '{print $6}'`
+
+ssh root@192.168.178.206 esxcli vm process kill –type=soft –world-id=$world
+
+
